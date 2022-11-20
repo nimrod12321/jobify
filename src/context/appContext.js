@@ -24,7 +24,7 @@ const AppProvider = ({children}) =>{
 
 
     return(
-    <AppContext.Provider value ={{...state,displayAlert}}>
+    <AppContext.Provider value ={{...state,displayAlert }}>
         {children}
     </AppContext.Provider>
     )

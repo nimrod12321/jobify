@@ -15,18 +15,22 @@ const initialState = {
 function Register() {
     const[values,setValues] = useState(initialState);
 
-    const state = useAppContext()
-    console.log(state);
+    const {isLoading, showAlert, displayAlert} = useAppContext()
+
     const toggleMember = () =>{
         setValues({...values,isMember:!values.isMember})
     }
     const handleChange = (e) => {
-        setValues({...values,[e.target.name]: e.target.value})
-        console.log(values);
+        console.log(e.target.name, e.target.value)
+        setValues({...values,[e.target.name]: e.target.value}) 
     }
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(e.target);
+        const {name, email, password, isMember} = values;
+        if (!email || !password  || (!isMember && !name)){
+            displayAlert()
+            return
+        }
     }
   return (
     <Wrapper className='full-page'>
@@ -38,8 +42,8 @@ function Register() {
             <FormRow 
             type={'text'}
             name ={'name'}
-            value = {values.email}
-            handleChange ={(e)=>handleChange()}
+            value = {values.name}
+            handleChange ={handleChange}
             />
 }
             <FormRow 
@@ -55,7 +59,7 @@ function Register() {
             handleChange ={handleChange}
             />
             
-            <button type='submit' className='btn btn-block'>
+            <button onClick={onSubmit} type='submit' className='btn btn-block'>
                 submit
             </button>
             <p>
