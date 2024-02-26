@@ -1,5 +1,6 @@
 import express from 'express'
 import morgan from 'morgan';
+import mongoose from 'mongoose';
 import * as dotenv from 'dotenv'
 const app = express()
 dotenv.config();
@@ -29,5 +30,11 @@ app.use((err,req,res,next)=>{
     res.status(500).json({msg:'something went wrong'})
 })
 const port =process.env.PORT || 5100
+try {
+    await mongoose.connect(process.env.MONGO_URL)
+} catch (error) {
+    console.log(error);
+    process.exit(1)
+}
 
 app.listen(port,()=>{console.log(`server is running on PORT ${port}`);});
